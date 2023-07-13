@@ -1,0 +1,19 @@
+{
+  "name": "corporate_studs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohit-idd-bhu/corporate_studs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohit-idd-bhu/corporate_studs/issues"
+  },
+  "homepage": "https://github.com/mohit-idd-bhu/corporate_studs#readme"
+}
