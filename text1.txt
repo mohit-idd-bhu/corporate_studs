@@ -1,0 +1,7 @@
+Ip access-list role-based Allow_ICMP
+10 permit icmp
+Ip access-list role-based Block_ICMP
+10 deny icmp
+Ip access-list role-based Block_Malware
+10 deny 45
+20 deny 93

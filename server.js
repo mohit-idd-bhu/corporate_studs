@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 app.use(cors());
-const {retrieveIdConnections, uploadConnectionData, uploadServicesData} = require('./mongodb');
+const {retrieveIdConnections, uploadConnectionData, uploadServicesData, resetDatabase, getServicesData} = require('./mongodb');
 
 app.use(express.json());
 
@@ -27,9 +27,12 @@ app.get('/view',async (req,res)=>{
   res.json(nodes_reached);
 })
 
-app.get('/details',(req,res)=>{
-  
-})
+app.get('/details',async (req,res)=>{
+  const {service}=req.query;
+  const response = await getServicesData(service);
+  if(response===null) res.status(500).json({message:"Internal Server Error"});
+  else res.status(200).json({data:response});
+});
 
 app.post('/connection', async (req, res) => {
   const response = await uploadConnectionData(req.body);
@@ -54,6 +57,12 @@ app.post('/service',async (req,res)=>{
     });
   }
 });
+
+app.delete('/reset',async (req,res)=>{
+  const response = await resetDatabase();
+  if(response) res.status(200).json({message : "Database reset successfull"});
+  else res.status(500).json({error:response});
+})
 
 const port = 3000;
 

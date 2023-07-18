@@ -1,0 +1,5 @@
+Cts role-based permissions from 5 to 1 Allow_ICMP
+Cts role-based permissions from 5 to 1 Allow_TCP
+Cts role-based permissions from 5 to 1 Allow_SMTP
+Cts role-based permissions from 5 to 4 Allow_ICMP
+Cts role-based permissions from 5 to 3 Allow_ICMP
