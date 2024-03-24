@@ -4,9 +4,9 @@ const app = express();
 app.use(cors());
 const dbName = "hackathon";
 const collectionName = "connections";
+const uri = require('./key');
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://mohit:mohit@cluster0.lm5qs.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 app.use(express.json());
