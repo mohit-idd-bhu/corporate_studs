@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from '../src/components/Footer/Footer';
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -25,13 +26,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer>
-        Developed by team{" "}
-        <span style={{ fontWeight: "bold", marginLeft: "5px" }}>
-          {" "}
-          {" Corporate Studs"}
-        </span>
-      </footer>
+      <Footer/>
 
       <style jsx>{`
         main {
@@ -41,32 +36,6 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
       `}</style>
 

@@ -5,13 +5,7 @@ import { NodeContextProvider } from "../src/components/nodeContext";
 const ZoomContainer = () => {
   return (
     <>
-      <h1
-        style={{
-          textAlign: "center",
-          fontFamily: "sans-serif",
-          color: "#021130",
-        }}
-      >
+      <h1 className={styles['title']}>
         Node Visualization below
       </h1>
       <div className={styles.containerOuter}>
