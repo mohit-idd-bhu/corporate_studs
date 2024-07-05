@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/main.module.css";
-import HexGrid from "./data";
+import HexGrid from "../src/HexGrid";
 import { NodeContextProvider } from "../src/components/nodeContext";
 const ZoomContainer = () => {
   return (
@@ -12,7 +12,7 @@ const ZoomContainer = () => {
         <div className={styles.containerInner}>
           <div className={styles.content}>
             <NodeContextProvider>
-              <HexGrid />
+              <HexGrid gridNumber={1008}/>
             </NodeContextProvider>
           </div>
         </div>
