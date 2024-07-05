@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/main.module.css";
-import HexGrid from "../src/HexGrid";
-import { NodeContextProvider } from "../src/components/nodeContext";
+import HexGrid from "../src/components/HexGrid/HexGrid";
+import { NodeContextProvider } from "../src/context/nodeContext";
 const ZoomContainer = () => {
   return (
     <>

@@ -1,8 +1,10 @@
 import React from "react";
 import HexagonGrid from "react-hexagon-grid";
 import times from "lodash/times";
-import { useNodeContext } from "../src/components/nodeContext";
-import Footer from '../src/components/Footer/Footer';
+import { useNodeContext } from "../../context/nodeContext";
+import Footer from '../Footer/Footer';
+import Overlay from "../Overlay/Overlay";
+import styles from './HexGrid.module.css';
 
 async function fetchData(id) {
   try {
@@ -76,28 +78,20 @@ const renderHexagonContent = (hexagon, nodeNumbers,contextValues) => (
 const HexGridComponent = ({gridNumber}) => {
   const contextValues = useNodeContext();
   const hexagons = times(gridNumber, (id) => id);
-  const { detailData, nodeNumbers } = contextValues;
+  const { detailData, nodeNumbers, updateDetailData } = contextValues;
 
   return (
     <>
-      {detailData.length > 0 && (
-        <div style={{ textAlign: "center" }}>
+      <Overlay isVisible={detailData.length} onClose={(e)=>{updateDetailData([])}}>
           <h3>Below are the access control/s</h3>
           {detailData.map((x, index) => (
             <h5
               key={index}
-              style={{
-                color: "blue",
-                fontWeight: "500",
-                fontSize: "100",
-                marginBottom: "2ch",
-              }}
-            >
+              className={styles['detail-data-map']}>
               {x}
             </h5>
           ))}
-        </div>
-      )}
+      </Overlay>
       <HexagonGrid
         gridWidth={1000}
         gridHeight={1000}
