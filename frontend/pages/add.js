@@ -4,6 +4,7 @@ import Footer from '../src/components/Footer/Footer';
 import { connectionParser } from '../src/utils/connectionParser';
 import { serviceParser } from '../src/utils/serviceParser';
 import { useRouter } from 'next/router';
+import {backendUrl} from '../config';
 
 const TextFileUpload = () => {
   const serviceFileRef = useRef(null);
@@ -37,8 +38,8 @@ const TextFileUpload = () => {
       const serviceFileText = await serviceParser(serviceFile);
       const connectionFileText = await connectionParser(connectionFile);
       console.log(serviceFileText,connectionFileText);
-      await postData('http://localhost:5000/service/add',serviceFileText);
-      await postData('http://localhost:5000/connection/add',connectionFileText);
+      await postData(`${backendUrl}/service/add`,serviceFileText);
+      await postData(`${backendUrl}/connection/add`,connectionFileText);
       alert("Files Uploaded Succesfully");
       router.push('/main');
     }

@@ -5,10 +5,11 @@ import { useNodeContext } from "../../context/nodeContext";
 import Footer from '../Footer/Footer';
 import Overlay from "../Overlay/Overlay";
 import styles from './HexGrid.module.css';
+import { backendUrl } from "../../../config";
 
 async function fetchData(id) {
   try {
-    const data = await fetch(`http://localhost:5000/connection/${id}`)
+    const data = await fetch(`${backendUrl}/connection/${id}`)
       .then((res) => res.json())
       .then((res) => res.data);
     return data;
