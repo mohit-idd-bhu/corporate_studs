@@ -1,0 +1,18 @@
+.container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.centered-list li {
+    margin: 10px 0;
+}

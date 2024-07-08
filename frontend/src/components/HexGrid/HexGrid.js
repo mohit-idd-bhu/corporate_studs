@@ -85,11 +85,9 @@ const HexGridComponent = ({gridNumber}) => {
       <Overlay isVisible={detailData.length} onClose={(e)=>{updateDetailData([])}}>
           <h3>Below are the access control/s</h3>
           {detailData.map((x, index) => (
-            <h5
-              key={index}
-              className={styles['detail-data-map']}>
+            <a key={index} href={`/check/${x}`} target="_blank" className={styles['detail-data-map']}>
               {x}
-            </h5>
+            </a>
           ))}
       </Overlay>
       <HexagonGrid

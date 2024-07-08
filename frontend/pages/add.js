@@ -1,20 +1,32 @@
 import React, { useRef, useState } from 'react';
 import styles from '../styles/add.module.css';
 import Footer from '../src/components/Footer/Footer';
+import { ruleParser } from '../src/utils/ruleParser';
+import { roleParser } from '../src/utils/roleParser';
 
 const TextFileUpload = () => {
-  const fileRef1 = useRef(null);
-  const fileRef2 = useRef(null);
+  const rulesRef = useRef(null);
+  const rolesRef = useRef(null);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const file1 = fileRef1.current.files[0];
-    const file2 = fileRef2.current.files[0];
-    console.log(file1);
-    console.log(file2);
-    // postData("http://localhost:8000/upload",parseTextFile2(file2.content))
-    fileRef1.current.value=null;
-    fileRef2.current.value=null;
+    if(rulesRef.current.files[0]==null||rolesRef.current.files[0]==null){
+      alert("Upload Both Files");
+      return;
+    }
+    try{
+      const rulesFile = rulesRef.current.files[0];
+      const rolesFile = rolesRef.current.files[0];
+      const rulesFileText = await ruleParser(rulesFile);
+      const rolesFileText = await roleParser(rolesFile);
+      console.log(rulesFileText,rolesFileText);
+      //Add API Routes
+    }
+    catch(e){
+      console.error(e);
+    }
+    rulesRef.current.value=null;
+    rolesRef.current.value=null;
   };
 
   // const postData = async (url,text) => {
@@ -44,25 +56,23 @@ const TextFileUpload = () => {
        
         <div className={styles.fileInputContainer}>
           <label className={styles.fileInputLabel}>
-            File 1:
+            Rules File:
           </label>
           <input
             type="file"
             accept=".txt"
-            ref={fileRef1}
-            onChange={(e)=> setFile1(e.target.files[0])}
+            ref={rulesRef}
             className={styles.fileInput}
           />
         </div>
         <div className={styles.fileInputContainer}>
           <label className={styles.fileInputLabel}>
-            File 2:
+            Roles File:
           </label>
           <input
             type="file"
             accept=".txt"
-            ref={fileRef2}
-            onChange={(e)=> setFile2(e.target.files[0])}
+            ref={rolesRef}
             className={styles.fileInput}
           />
         </div>

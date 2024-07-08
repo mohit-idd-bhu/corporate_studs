@@ -5,4 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #fff; /* Ensure the footer has a background color */
 }
