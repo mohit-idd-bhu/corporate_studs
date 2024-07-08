@@ -1,53 +1,53 @@
 import React, { useRef, useState } from 'react';
 import styles from '../styles/add.module.css';
 import Footer from '../src/components/Footer/Footer';
-import { ruleParser } from '../src/utils/ruleParser';
-import { roleParser } from '../src/utils/roleParser';
+import { connectionParser } from '../src/utils/connectionParser';
+import { serviceParser } from '../src/utils/serviceParser';
+import { useRouter } from 'next/router';
 
 const TextFileUpload = () => {
-  const rulesRef = useRef(null);
-  const rolesRef = useRef(null);
+  const serviceFileRef = useRef(null);
+  const connectionFileRef = useRef(null);
+  const router = useRouter();
+
+  const postData = async (url,text) => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(text)
+      });
+      console.log(response);
+    } catch (error) {
+      console.error('Error posting data to API:', error);
+    }
+  };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    if(rulesRef.current.files[0]==null||rolesRef.current.files[0]==null){
+    if(serviceFileRef.current.files[0]==null||connectionFileRef.current.files[0]==null){
       alert("Upload Both Files");
       return;
     }
     try{
-      const rulesFile = rulesRef.current.files[0];
-      const rolesFile = rolesRef.current.files[0];
-      const rulesFileText = await ruleParser(rulesFile);
-      const rolesFileText = await roleParser(rolesFile);
-      console.log(rulesFileText,rolesFileText);
-      //Add API Routes
+      const serviceFile = serviceFileRef.current.files[0];
+      const connectionFile = connectionFileRef.current.files[0];
+      const serviceFileText = await serviceParser(serviceFile);
+      const connectionFileText = await connectionParser(connectionFile);
+      console.log(serviceFileText,connectionFileText);
+      await postData('http://localhost:5000/service/add',serviceFileText);
+      await postData('http://localhost:5000/connection/add',connectionFileText);
+      alert("Files Uploaded Succesfully");
+      router.push('/main');
     }
     catch(e){
       console.error(e);
     }
-    rulesRef.current.value=null;
-    rolesRef.current.value=null;
+    serviceFileRef.current.value=null;
+    connectionFileRef.current.value=null;
   };
-
-  // const postData = async (url,text) => {
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(text)
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('Data successfully posted to API.');
-  //     } else {
-  //       console.error('Failed to post data to API.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error posting data to API:', error);
-  //   }
-  // };
 
   return (
     <div className={styles.container}>
@@ -56,23 +56,23 @@ const TextFileUpload = () => {
        
         <div className={styles.fileInputContainer}>
           <label className={styles.fileInputLabel}>
-            Rules File:
+            Service Data File:
           </label>
           <input
             type="file"
             accept=".txt"
-            ref={rulesRef}
+            ref={serviceFileRef}
             className={styles.fileInput}
           />
         </div>
         <div className={styles.fileInputContainer}>
           <label className={styles.fileInputLabel}>
-            Roles File:
+            Connection Data File:
           </label>
           <input
             type="file"
             accept=".txt"
-            ref={rolesRef}
+            ref={connectionFileRef}
             className={styles.fileInput}
           />
         </div>

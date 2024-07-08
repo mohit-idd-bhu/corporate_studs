@@ -1,6 +1,6 @@
 import { fileReader } from "./fileReader";
 
-export async function ruleParser(file) {
+export async function connectionParser(file) {
     try{
         const contents = await fileReader(file);
         const lines = contents.split('\n');

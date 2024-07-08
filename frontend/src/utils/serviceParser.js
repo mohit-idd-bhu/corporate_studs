@@ -1,6 +1,6 @@
 import { fileReader } from "./fileReader";
 
-export async function roleParser(file) {
+export async function serviceParser(file) {
     let currentName="";
     const content = await fileReader(file);
     const lines = content.split('\n');

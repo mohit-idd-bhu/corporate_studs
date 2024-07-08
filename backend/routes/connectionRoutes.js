@@ -15,6 +15,7 @@ router.get('/:id',async (req,res)=>{
 router.post('/add',async (req,res)=>{
     try{
         const data = req.body;
+        await Connection.deleteMany({});
         await Connection.insertMany(data);
         res.status(200).json({message:"Connections Succesfully Created"});
     }

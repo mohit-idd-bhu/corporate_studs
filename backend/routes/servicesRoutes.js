@@ -15,6 +15,7 @@ router.get('/:service',async (req,res)=>{
 router.post('/add',async (req,res)=>{
     try{
         const data = req.body;
+        await Service.deleteMany({});
         await Service.insertMany(data);
         res.status(200).json({message:"Services Added Succesfully"});
     }

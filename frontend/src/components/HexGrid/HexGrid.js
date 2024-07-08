@@ -8,9 +8,9 @@ import styles from './HexGrid.module.css';
 
 async function fetchData(id) {
   try {
-    const data = await fetch(`http://localhost:8000/view?id=${id}`)
+    const data = await fetch(`http://localhost:5000/connection/${id}`)
       .then((res) => res.json())
-      .then((res) => res);
+      .then((res) => res.data);
     return data;
   }catch (error) {
     console.error("Error fetching data:", error);
