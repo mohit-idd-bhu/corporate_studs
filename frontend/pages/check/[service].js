@@ -3,25 +3,30 @@ import styles from '../../styles/protocols.module.css';
 import Footer from '../../src/components/Footer/Footer';
 import { useEffect, useState } from 'react';
 import Overlay from '../../src/components/Overlay/Overlay';
+import {backendUrl} from '../../config';
 
 const ServiceDetail = ()=>{
     const router = useRouter();
-    const {service} = router.query;
     const [serviceData, setServiceData] = useState({service:"",allow:[],deny:[]});
     const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
+        if(!router.isReady) return;
         const fetchData = async () => {
             try {
-              const response = await axios.get(`http://localhost:5000/service/${service}`);
-              setData(response.data);
-              setLoading(false);
+                const {service} = router.query;
+                const response = 
+                    await fetch(`${backendUrl}/service/${service}`)
+                    .then(res=>res.json())
+                    .then(res=>res.data)
+                setServiceData(response);
+                setLoading(false);
             } catch (err) {
-              setLoading(false);
+                setLoading(false);
             }
         };
         fetchData();
-    },[]);
+    },[router.isReady]);
 
     if(loading){
         return(
