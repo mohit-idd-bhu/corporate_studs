@@ -1,11 +1,11 @@
 # Project Title
 
-An Interactive Dashboard made for visualization of network protocols.
+An Interactive Dashboard was made for the visualization of network protocols.
 
 ## Description
 
-The project was made for a 24 hr hackathon at Cisco, Bengaluru. This project helps in visualization of Cisco Trust Sec software, which is used in displaying network protocols and control.
-It is a next app based upon express server. It uses MongoDB Atlas as its databse.
+The project was made for a 24-hour hackathon at Cisco, Bengaluru. This project helps visualize Cisco Trust Sec software, which displays network protocols and control.
+It is the next app based on the express server. It uses MongoDB Atlas as its database.
 
 ## Getting Started
 
@@ -18,25 +18,22 @@ cd frontend && npm install
 cd backend && npm install
 ```
 
-This installs dependancies for both backend and frontend
+This installs dependencies for both the backend and frontend.
 
-This application uses a MongoDB Atlas Cluster as Database. Hence, URI need to be generated for that.
+This application uses a MongoDB Atlas Cluster as a Database. Hence, a URI needs to be generated for that.
 Generate the URI by creating an account.
-Create a file named key.js. Save the file with following content
 
+MONGO_URI can be generated and stored in a .env file in the backend folder
+
+### Executing
+
+For Frontend
 ```
-const uri = "YOUR GENERATED URI";
-module.exports = uri;
-```
-
-### Executing program
-
-From the home directory execute two commands
-
-```
-cd frontend && npm run dev
+npm run build
+npm run start
 ```
 
+For Backend
 ```
-cd backend && npm run start
+npm run start
 ```
