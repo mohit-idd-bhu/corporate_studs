@@ -5,14 +5,14 @@ export async function serviceParser(file) {
     const content = await fileReader(file);
     const lines = content.split('\n');
     const data = [];
-    let rule={service:"",permit:[],deny:[]};
+    let rule={service:"",allow:[],deny:[]};
     lines.forEach(function(line) {
       line = line.trim();
       if (line.startsWith('Ip access-list role-based')) {
         if(rule.service.length>0){
           data.push(rule);
         }
-        rule={service:"",permit:[],deny:[]};
+        rule={service:"",allow:[],deny:[]};
         const parts = line.split(' ');
         currentName = parts[3];
         rule.service=currentName;
@@ -22,7 +22,7 @@ export async function serviceParser(file) {
         const action = parts[1];
         const service = parts[2];
         if(action=="permit")
-          rule.permit.push(service);
+          rule.allow.push(service);
         else
           rule.deny.push(service);
       }
