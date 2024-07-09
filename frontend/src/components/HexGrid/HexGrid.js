@@ -6,80 +6,84 @@ import Footer from '../Footer/Footer';
 import Overlay from "../Overlay/Overlay";
 import styles from './HexGrid.module.css';
 import { backendUrl } from "../../../config";
-
-async function fetchData(id) {
-  try {
-    const data = await fetch(`${backendUrl}/connection/${id}`)
-      .then((res) => res.json())
-      .then((res) => res.data);
-    return data;
-  }catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-}
-
-const cellColorChange = (value, nodeNumbers)=>{
-  if(nodeNumbers.includes(value)) return "#410e69";
-  if(nodeNumbers.includes(-value)) return "#238e12";
-  else return "#d5dbe8";
-}
-
-const textColorChange = (value, nodeNumbers) => {
-  return nodeNumbers.includes(value)||nodeNumbers.includes(-value) ? "white" : "black";
-}
-
-const handleClick = async (hexagon,contextValues)=>{
-  const { nodeNumbers, updateNodeNumbers, nodeData, updateNodeData, updateDetailData } = contextValues;
-  if (!nodeNumbers.includes(hexagon + 1)) {
-    const data = await fetchData(hexagon + 1);
-    let result = data.map(x=>x.to);
-    result.push(-(hexagon+1));
-    updateNodeNumbers(result);
-    updateNodeData(data);
-    updateDetailData([]);
-  }
-  else{
-    updateDetailData(
-      nodeData.filter((x) => x.to === hexagon + 1).flatMap((obj) => obj.type)
-    )
-  }
-}
-
-const getHexProps = (hexagon, contextValues) => {
-  const { nodeNumbers } = contextValues;
-
-  return {
-    style: {
-      fill: cellColorChange(hexagon + 1, nodeNumbers),
-      stroke: "white",
-      position: "relative",
-    },
-    onClick: handleClick.bind(null,hexagon,contextValues),
-  };
-};
-
-const renderHexagonContent = (hexagon, nodeNumbers,contextValues) => (
-  <text
-    x="50%"
-    y="50%"
-    fontWeight="bold"
-    fontSize={150}
-    onClick={handleClick.bind(null,hexagon,contextValues)}
-    style={{ 
-      fill: textColorChange(hexagon + 1, nodeNumbers), 
-      cursor:"pointer"
-    }}
-    dominantBaseline="mathematical"
-    textAnchor="middle">
-    {hexagon + 1}
-  </text>
-);
+import { useLoader } from "../../context/LoaderContext";
 
 const HexGridComponent = ({gridNumber}) => {
+  const {setLoading} = useLoader();
   const contextValues = useNodeContext();
   const hexagons = times(gridNumber, (id) => id);
   const { detailData, nodeNumbers, updateDetailData } = contextValues;
+
+  async function fetchData(id) {
+    try {
+      setLoading(true);
+      const data = await fetch(`${backendUrl}/connection/${id}`)
+        .then((res) => res.json())
+        .then((res) => res.data);
+      setLoading(false);
+      return data;
+    }catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  }
+  
+  const cellColorChange = (value, nodeNumbers)=>{
+    if(nodeNumbers.includes(value)) return "#410e69";
+    if(nodeNumbers.includes(-value)) return "#238e12";
+    else return "#d5dbe8";
+  }
+  
+  const textColorChange = (value, nodeNumbers) => {
+    return nodeNumbers.includes(value)||nodeNumbers.includes(-value) ? "white" : "black";
+  }
+  
+  const handleClick = async (hexagon,contextValues)=>{
+    const { nodeNumbers, updateNodeNumbers, nodeData, updateNodeData, updateDetailData } = contextValues;
+    if (!nodeNumbers.includes(hexagon + 1)) {
+      const data = await fetchData(hexagon + 1);
+      let result = data.map(x=>x.to);
+      result.push(-(hexagon+1));
+      updateNodeNumbers(result);
+      updateNodeData(data);
+      updateDetailData([]);
+    }
+    else{
+      updateDetailData(
+        nodeData.filter((x) => x.to === hexagon + 1).flatMap((obj) => obj.type)
+      )
+    }
+  }
+  
+  const getHexProps = (hexagon, contextValues) => {
+    const { nodeNumbers } = contextValues;
+  
+    return {
+      style: {
+        fill: cellColorChange(hexagon + 1, nodeNumbers),
+        stroke: "white",
+        position: "relative",
+      },
+      onClick: handleClick.bind(null,hexagon,contextValues),
+    };
+  };
+  
+  const renderHexagonContent = (hexagon, nodeNumbers,contextValues) => (
+    <text
+      x="50%"
+      y="50%"
+      fontWeight="bold"
+      fontSize={150}
+      onClick={handleClick.bind(null,hexagon,contextValues)}
+      style={{ 
+        fill: textColorChange(hexagon + 1, nodeNumbers), 
+        cursor:"pointer"
+      }}
+      dominantBaseline="mathematical"
+      textAnchor="middle">
+      {hexagon + 1}
+    </text>
+  );
 
   return (
     <>
